@@ -1,24 +1,62 @@
-document.addEventListener("DOMContentLoaded", function(event) {
 
-  var bugdetController = (function() {
 
-   var Expense = function(id,description,value){
-     this.id=id;
-     this.description= description;
-     this.value = value;
-   }
+  var budgetController = (function() {
 
-   var Income = function(id,description,value){
-     this.id=id;
-     this.description= description;
-     this.value = value;
-   }
+    var Expense = function(id, description, value) {
+      this.id = id;
+      this.description = description;
+      this.value = value;
+    }
 
-  var allExpenses = [];
-  var allIncomes = [];
+    var Income = function(id, description, value) {
+      this.id = id;
+      this.description = description;
+      this.value = value;
+    }
+
+    var data = {
+      allItems: {
+        inc: [],
+        exp: []
+
+      },
+      totals: {
+        exp: 0,
+        inc: 0
+      }
+    };
+
+    return {
+      addItem: function(type, des, val) {
+        var newItem,
+          ID;
+
+        if (data.allItems[type].length > 0) {
+          ID = data.allItems[type][data.allItems[type].length - 1].id + 1;
+        } else { 
+          ID = 0;
+        }
+
+        if (type === "exp") {
+          newItem = new Expense(ID, des, val);
+        } else if (type === "inc") {
+          newItem = new Income(ID, des, val);
+        }
+        data.allItems[type].push(newItem);
+        return newItem;
+      },
+
+      test : function() {
+        console.log(data);
+      }
+
+    };
 
 
   })();
+
+
+
 
   var UIcontroller = (function() {
 
@@ -47,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   })();
 
-  var controller = (function(bugdetCtrl, UIctrl) {
+  var controller = (function(budgetCtrl, UIctrl) {
     var setUpEventListners = function() {
       var DOM = UIctrl.getDOMstrings();
       document.querySelector(DOM.inputBtn).addEventListener("click", ctr);
@@ -62,8 +100,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
     };
 
     var ctr = function() {
-      var input = UIctrl.getInput();
-      console.log(input);
+      var input,
+        newItem;
+
+      input = UIctrl.getInput();
+
+      newInput = budgetCtrl.addItem(input.type, input.description, input.value);
 
     }
 
@@ -74,8 +116,6 @@ document.addEventListener("DOMContentLoaded", function(event) {
       }
     }
 
-  })(bugdetController, UIcontroller);
+  })(budgetController, UIcontroller);
 
   controller.init();
-
-});
