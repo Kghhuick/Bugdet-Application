@@ -1,40 +1,26 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
-var bugdetController = (function(){
+  var bugdetController = (function() {})();
 
-console.log("kamil");
+  var UIcontroller = (function() {})();
 
+  var controller = (function(bugdetCtrl, UIctrl) {
 
-})();
+    var ctr = function() {
+      console.log("working");
 
+    }
 
+    document.querySelector(".add__btn").addEventListener("click", ctr)
 
-var UIcontroller = (function(){
+    document.addEventListener("keypress", function(event) {
+      if (event.keyCode === 13 || event.which === 13) {
 
+        ctr();
+      }
 
+    });
 
-
-
-})();
-
-
-
-
-var controller = (function(bugdetCtrl,UIctrl){
-
-
-
-
-
-
-})(bugdetController,UIcontroller);
-
-
-
-
-
-
-
-
+  })(bugdetController, UIcontroller);
 
 });
