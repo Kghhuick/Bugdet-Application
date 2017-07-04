@@ -1,6 +1,24 @@
 document.addEventListener("DOMContentLoaded", function(event) {
 
-  var bugdetController = (function() {})();
+  var bugdetController = (function() {
+
+   var Expense = function(id,description,value){
+     this.id=id;
+     this.description= description;
+     this.value = value;
+   }
+
+   var Income = function(id,description,value){
+     this.id=id;
+     this.description= description;
+     this.value = value;
+   }
+
+  var allExpenses = [];
+  var allIncomes = [];
+
+
+  })();
 
   var UIcontroller = (function() {
 
@@ -30,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   })();
 
   var controller = (function(bugdetCtrl, UIctrl) {
-    var setUpEventListners = function () {
+    var setUpEventListners = function() {
       var DOM = UIctrl.getDOMstrings();
       document.querySelector(DOM.inputBtn).addEventListener("click", ctr);
 
@@ -50,15 +68,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
     }
 
     return {
-     init : function () {
-      console.log("working");
-      setUpEventListners() ;
+      init: function() {
+        console.log("working");
+        setUpEventListners();
+      }
     }
- }
-
 
   })(bugdetController, UIcontroller);
-
 
   controller.init();
 
