@@ -75,32 +75,64 @@ var UIcontroller = (function() {
     addListItem: function(obj, type) {
       var html,
         newHtml,
-        element;
+        element,
+        fields;
 
       if (type === 'inc') {
         element = DOMstrings.incomeContainer;
-        html = '<div class="item clearfix" id="income+%id%">
- < div class = "item__description" >% description % </div> < div class = "right clearfix" > <div class="item__value">%value%</div> < div class = "item__delete" > <button class="item__delete--
-         btn">
-          <i class="ion-ios-close-outline"></i>
-        </button> < /div></div > </div>';
+        html = '<div class="item clearfix" id="income-%id%">\
+         <div class="item__description">%description%</div>\
+         <div class="right clearfix"><div class="item__value">%value%</div>\
+           <div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div>\
+         </div>\
+       </div>'
 
-      } else {
-        element = DOMstrings.epxpensesContainer;
-        html = '<div class="item clearfix" id="expense-%id%"> <div
- class = "item__description" >% description % </div> < div class = "right clearfix" > <div class="item__value">%value%</div> < div class = "item__percentage" > 21 % </div> < div class = "item__delete" > <button class="item__delete--btn">
-          <i class="ion-ios-close-outline"></i>
-        </button> < /div></div > </div>';
 
+
+
+
+     } else if(type==="exp"){
+        element = DOMstrings.expensesContainer;
+        html = '<div class="item clearfix" id="expense-%id%">\
+                <div class="item__description">%description%</div>\
+                  <div class="right clearfix"><div class="item__value">%value%</div>\
+                    <div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div>\
+                  </div>\
+                </div>'
       }
+
+
+
+
 
       newHtml = html.replace("%id%", obj.id);
       newHtml = newHtml.replace("%description%", obj.description);
       newHtml = newHtml.replace("%value%", obj.value);
 
-      document.querySelector(element).insertAdjacentHtml("beforeend", newHtml);
+      document.querySelector(element).insertAdjacentHTML("beforeend", newHtml);
 
     },
+
+
+    clearFields : function() {
+      fields = document.querySelectorAll(DOMstrings.inputDescription + "," + DOMstrings.inputValue);
+
+    var fieldsArr =  Array.prototype.slice.call(fields);
+
+    fieldsArr.forEach(function(current){
+      current.value="";
+
+    });
+
+    },
+
+
+
+
+
+
+
+
 
     getDOMstrings: function() {
       return DOMstrings;
@@ -131,9 +163,11 @@ var controller = (function(budgetCtrl, UIctrl) {
 
     input = UIctrl.getInput();
 
-    newInput = budgetCtrl.addItem(input.type, input.description, input.value);
+    newItem = budgetCtrl.addItem(input.type, input.description, input.value);
 
     UIctrl.addListItem(newItem, input.type);
+
+    UIctrl.clearFields();
 
   }
 
