@@ -54,9 +54,28 @@ var budgetController = (function() {
       } else if (type === "inc") {
         newItem = new Income(ID, des, val);
       }
-      data.allItems[type].push(newItem);
-      return newItem;
+
+      var ids=data.allItems[type].push(newItem);
+    return newItem;
     },
+
+      deleteItem : function(type,id){
+        var ids,index;
+       ids=  data.allItems[type].map(function(current){
+        return current.id;
+
+      });
+
+       index=ids.indexOf(id);
+
+       if(index !== -1){
+         data.allItems[type].splice(index,1);
+
+       }
+
+
+     },
+
 
     calculateBudget: function() {
       calculateTotal("exp");
@@ -237,7 +256,9 @@ var controller = (function(budgetCtrl, UIctrl) {
      if(itemId) {
        splitId=itemId.split("-");
        type=splitId[0];
-       Id=splitId[1];
+       Id= parseInt(splitId[1]);
+
+       budgetCtrl.deleteItem(type,Id);
      }
 
    };
